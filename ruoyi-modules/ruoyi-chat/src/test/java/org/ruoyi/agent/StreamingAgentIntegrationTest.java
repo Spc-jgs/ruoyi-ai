@@ -85,6 +85,9 @@ public class StreamingAgentIntegrationTest {
 
     // ==================== 初始化 ====================
 
+    /**
+     * 初始化模型
+     */
     @BeforeEach
     void setUp() {
 //        streamingModel = OpenAiStreamingChatModel.builder()
@@ -92,7 +95,7 @@ public class StreamingAgentIntegrationTest {
 //            .apiKey(API_KEY)
 //            .modelName(MODEL_NAME)
 //            .build();
-
+        // 流式模型
         streamingModel = OpenAiStreamingChatModel.builder()
             .baseUrl(BASE_URL)
             .apiKey(API_KEY)
@@ -116,7 +119,7 @@ public class StreamingAgentIntegrationTest {
             }))
             .build();
 
-
+        // 同步模型
         syncModel = OpenAiChatModel.builder()
             .baseUrl(BASE_URL)
             .apiKey(API_KEY)
