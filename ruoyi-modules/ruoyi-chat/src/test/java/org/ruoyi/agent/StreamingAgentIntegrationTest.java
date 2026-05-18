@@ -1,5 +1,6 @@
 package org.ruoyi.agent;
 
+import com.alibaba.fastjson.JSON;
 import dev.langchain4j.agentic.AgenticServices;
 import dev.langchain4j.agentic.supervisor.SupervisorAgent;
 import dev.langchain4j.agentic.supervisor.SupervisorResponseStrategy;
@@ -15,6 +16,7 @@ import dev.langchain4j.model.openai.OpenAiStreamingChatModel;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.V;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -45,14 +47,15 @@ import java.util.concurrent.TimeUnit;
  * @date 2025/04/10
  */
 @Disabled("需要配置 API Key 后手动启用")
+@Slf4j
 public class StreamingAgentIntegrationTest {
 
     // ==================== 配置区域 ====================
-    private static final String BASE_URL = "https://api.ppio.com/openai";
+    private static final String BASE_URL = "https://openrouter.ai/api/v1";
     private static final String API_KEY = System.getenv("PPIO_API_KEY") != null
         ? System.getenv("PPIO_API_KEY")
-        : "xx"; // 默认 Key
-    private static final String MODEL_NAME = "deepseek/deepseek-v3.2";
+        : "YOUR_API_KEY_PLACEHOLDER"; // 默认 Key
+    private static final String MODEL_NAME = "openrouter/free";
 
     private StreamingChatModel streamingModel;
     private OpenAiChatModel syncModel;
@@ -93,18 +96,22 @@ public class StreamingAgentIntegrationTest {
         streamingModel = OpenAiStreamingChatModel.builder()
             .baseUrl(BASE_URL)
             .apiKey(API_KEY)
+            .modelName(MODEL_NAME)
             .listeners(List.of(new ChatModelListener() {
                 @Override
                 public void onRequest(ChatModelRequestContext ctx) {
                     // 请求发送前
+                    log.info("Request sent: {}", JSON.toJSONString(ctx));
                 }
                 @Override
                 public void onResponse(ChatModelResponseContext ctx) {
                     // 响应完成后
+                    log.info("Response received: {}", JSON.toJSONString(ctx));
                 }
                 @Override
                 public void onError(ChatModelErrorContext ctx) {
                     // 错误时
+                    log.info("Error occurred: {}", JSON.toJSONString(ctx));
                 }
             }))
             .build();
