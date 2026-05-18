@@ -54,7 +54,7 @@ public class StreamingAgentIntegrationTest {
     private static final String BASE_URL = "https://openrouter.ai/api/v1";
     private static final String API_KEY = System.getenv("PPIO_API_KEY") != null
         ? System.getenv("PPIO_API_KEY")
-        : "YOUR_API_KEY_PLACEHOLDER"; // 默认 Key
+        : "..."; // 默认 Key
     private static final String MODEL_NAME = "openrouter/free";
 
     private StreamingChatModel streamingModel;
