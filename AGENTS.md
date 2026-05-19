@@ -22,7 +22,6 @@
 - 当前 Codeup `main` 分支由 tag `3.0.0` 初始化
 - 后续业务二开基于 Codeup `main` 或 `feature/*` 分支进行
 - **不要**向原作者仓库 `upstream` 推送代码
-- **不要**向 GitHub 推送公司二开代码
 - 如需同步原项目更新，必须先创建 `upgrade/ruoyi-ai-x.y.z` 分支验证后再合并
 - 分支命名规范：`feature/模块名-简述`、`fix/简述`、`upgrade/ruoyi-ai-x.y.z`
 
